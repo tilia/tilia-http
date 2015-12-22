@@ -23,7 +23,7 @@ module Tilia
 
       # HTTP message version (1.0 or 1.1)
       #
-      # @return string
+      # @return [String]
       attr_accessor :http_version
 
       public
@@ -50,7 +50,7 @@ module Tilia
       # Note that because the underlying data may be based on a stream, this
       # method could only work correctly the first time.
       #
-      # @return string
+      # @return [String]
       def body_as_string
         body = self.body
         if body.is_a?(String)
@@ -93,7 +93,7 @@ module Tilia
 
       # Will return true or false, depending on if a HTTP header exists.
       #
-      # @param string name
+      # @param [String] name
       # @return bool
       def header?(name)
         @headers.key? name.downcase
@@ -111,8 +111,8 @@ module Tilia
       # `Set-Cookie` cannot be logically combined with a comma. In those cases
       # you *should* use header_as_array.
       #
-      # @param string name
-      # @return string|null
+      # @param [String] name
+      # @return [String, nil]
       def header(name)
         name = name.downcase
 
@@ -128,8 +128,8 @@ module Tilia
       #
       # If the header did not exists, this method will return an empty array.
       #
-      # @param string name
-      # @return string[]
+      # @param [String] name
+      # @return [String][]
       def header_as_array(name)
         name = name.downcase
 
@@ -144,9 +144,9 @@ module Tilia
       #
       # If the header already existed, it will be overwritten.
       #
-      # @param string name
-      # @param string|string[] value
-      # @return void
+      # @param [String] name
+      # @param [String, Array<String>] value
+      # @return [void]
       def update_header(name, value)
         value = [value] unless value.is_a?(Array)
         @headers[name.downcase] = [name, value]
@@ -160,7 +160,7 @@ module Tilia
       # Any header that already existed will be overwritten.
       #
       # @param array headers
-      # @return void
+      # @return [void]
       def update_headers(headers)
         headers.each do |name, value|
           update_header(name, value)
@@ -173,9 +173,9 @@ module Tilia
       # another value. Individual values can be retrieved with
       # getHeadersAsArray.
       #
-      # @param string name
-      # @param string value
-      # @return void
+      # @param [String] name
+      # @param [String] value
+      # @return [void]
       def add_header(name, value)
         l_name = name.downcase
         value = [value] unless value.is_a?(Array)
@@ -192,7 +192,7 @@ module Tilia
       # Any existing headers will not be overwritten.
       #
       # @param array headers
-      # @return void
+      # @return [void]
       def add_headers(headers)
         headers.each do |name, value|
           add_header(name, value)
@@ -217,15 +217,15 @@ module Tilia
       #
       # Should be 1.0 or 1.1.
       #
-      # @param string version
-      # @return void
+      # @param [String] version
+      # @return [void]
       def http_version=(version)
         @http_version = version
       end
 
       # Returns the HTTP version.
       #
-      # @return string
+      # @return [String]
       def http_version
         @http_version
       end

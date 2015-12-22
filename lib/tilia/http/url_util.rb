@@ -12,8 +12,8 @@ module Tilia
       # slashes (/) are treated as path-separators.
       #
       # @deprecated use \Sabre\HTTP\encode_path
-      # @param string path
-      # @return string
+      # @param [String] path
+      # @return [String]
       def self.encode_path(path)
         Tilia::Http.encode_path(path)
       end
@@ -23,8 +23,8 @@ module Tilia
       # Slashes are considered part of the name, and are encoded as %2f
       #
       # @deprecated use \Sabre\HTTP\encode_path_segment
-      # @param string path_segment
-      # @return string
+      # @param [String] path_segment
+      # @return [String]
       def self.encode_path_segment(path_segment)
         Tilia::Http.encode_path_segment(path_segment)
       end
@@ -32,8 +32,8 @@ module Tilia
       # Decodes a url-encoded path
       #
       # @deprecated use \Sabre\HTTP\decodePath
-      # @param string path
-      # @return string
+      # @param [String] path
+      # @return [String]
       def self.decode_path(path)
         Tilia::Http.decode_path(path)
       end
@@ -41,8 +41,8 @@ module Tilia
       # Decodes a url-encoded path segment
       #
       # @deprecated use \Sabre\HTTP\decode_path_segment
-      # @param string path
-      # @return string
+      # @param [String] path
+      # @return [String]
       def self.decode_path_segment(path)
         Tilia::Http.decode_path_segment(path)
       end
@@ -50,7 +50,7 @@ module Tilia
       # Returns the 'dirname' and 'basename' for a path.
       #
       # @deprecated Use Sabre\Uri\split.
-      # @param string path
+      # @param [String] path
       # @return array
       def self.split_path(path)
         Tilia::Uri.split(path)
@@ -59,9 +59,9 @@ module Tilia
       # Resolves relative urls, like a browser would.
       #
       # @deprecated Use Sabre\Uri\resolve.
-      # @param string base_path
-      # @param string new_path
-      # @return string
+      # @param [String] base_path
+      # @param [String] new_path
+      # @return [String]
       def self.resolve(base_path, new_path)
         Tilia::Uri.resolve(base_path, new_path)
       end

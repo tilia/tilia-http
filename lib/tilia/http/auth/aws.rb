@@ -12,12 +12,12 @@ module Tilia
 
         # The signature supplied by the HTTP client
         #
-        # @return string
+        # @return [String]
         attr_accessor :signature
 
         # The accesskey supplied by the HTTP client
         #
-        # @return string
+        # @return [String]
         attr_accessor :access_key
 
         public
@@ -56,12 +56,12 @@ module Tilia
 
         # Returns the username for the request
         #
-        # @return string
+        # @return [String]
         attr_reader :access_key
 
         # Validates the signature based on the secretKey
         #
-        # @param string secret_key
+        # @param [String] secret_key
         # @return bool
         def validate(secret_key)
           content_md5 = @request.header('Content-MD5')
@@ -108,7 +108,7 @@ module Tilia
         #
         # This should be called when username and password are incorrect, or not supplied at all
         #
-        # @return void
+        # @return [void]
         def require_login
           @response.add_header('WWW-Authenticate', 'AWS')
           @response.status = 401
@@ -124,7 +124,7 @@ module Tilia
         # This function also makes sure the Date header is within 15 minutes of the operating
         # system date, to prevent replay attacks.
         #
-        # @param string date_header
+        # @param [String] date_header
         # @return bool
         def validate_rfc2616_date(date_header)
           date = Tilia::Http::Util.parse_http_date(date_header)
@@ -149,7 +149,7 @@ module Tilia
 
         # Returns a list of AMZ headers
         #
-        # @return string
+        # @return [String]
         def amz_headers
           amz_headers = {}
           headers = @request.headers
@@ -172,9 +172,9 @@ module Tilia
 
         # Generates an HMAC-SHA1 signature
         #
-        # @param string key
-        # @param string message
-        # @return string
+        # @param [String] key
+        # @param [String] message
+        # @return [String]
         def hmacsha1(key, message)
           # Built in in Ruby
           OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), key, message)

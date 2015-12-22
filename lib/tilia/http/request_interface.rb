@@ -6,46 +6,46 @@ module Tilia
 
       # Returns the current HTTP method
       #
-      # @return string
+      # @return [String]
       def method
       end
 
       # Sets the HTTP method
       #
-      # @param string method
-      # @return void
+      # @param [String] method
+      # @return [void]
       def method=(_method)
       end
 
       # Returns the request url.
       #
-      # @return string
+      # @return [String]
       def url
       end
 
       # Sets the request url.
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def url=(_url)
       end
 
       # Returns the absolute url.
       #
-      # @return string
+      # @return [String]
       def absolute_url
       end
 
       # Sets the absolute url.
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def absolute_url=(_url)
       end
 
       # Returns the current base url.
       #
-      # @return string
+      # @return [String]
       def base_url
       end
 
@@ -55,8 +55,8 @@ module Tilia
       #
       # The base url should default to /
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def base_url=(_url)
       end
 
@@ -74,7 +74,7 @@ module Tilia
       #
       # If the path is outside of the base url, a LogicException will be thrown.
       #
-      # @return string
+      # @return [String]
       def path
       end
 
@@ -102,7 +102,7 @@ module Tilia
       # php://input, but unfortunately we need to special case it.
       #
       # @param array post_data
-      # @return void
+      # @return [void]
       def post_data=(_post_data)
       end
 
@@ -110,15 +110,15 @@ module Tilia
       #
       # If the value does not exist in the array, null is returned.
       #
-      # @param string value_name
-      # @return string|null
+      # @param [String] value_name
+      # @return [String, nil]
       def raw_server_value(_value_name)
       end
 
       # Sets the _SERVER array.
       #
       # @param array data
-      # @return void
+      # @return [void]
       def raw_server_data=(_data)
       end
     end

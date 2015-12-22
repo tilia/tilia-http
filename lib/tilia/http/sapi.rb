@@ -36,7 +36,7 @@ module Tilia
       # This calls php's header function and streams the body to php://output.
       #
       # @param ResponseInterface response
-      # @return void
+      # @return [void]
       def self.send_response(response)
         # RUBY: Rack does not support HTTP Version (?)
         # header("HTTP/#{response.http_version} #{response.status} #{response.status_text}")

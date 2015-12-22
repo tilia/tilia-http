@@ -9,7 +9,7 @@ module Tilia
 
       # Response object
       #
-      # @return ResponseInterface
+      # @return [ResponseInterface]
       attr_accessor :response
 
       public
@@ -30,7 +30,7 @@ module Tilia
 
       # Returns the full response object.
       #
-      # @return ResponseInterface
+      # @return [ResponseInterface]
       attr_reader :response
     end
   end

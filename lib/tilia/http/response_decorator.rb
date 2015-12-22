@@ -26,7 +26,7 @@ module Tilia
       #
       # In the case of a 200, this may for example be 'OK'.
       #
-      # @return string
+      # @return [String]
       def status_text
         @inner.status_text
       end
@@ -39,8 +39,8 @@ module Tilia
       # Or just the code, in which case the appropriate default message will be
       # added.
       #
-      # @param string|int status
-      # @return void
+      # @param [String, Fixnum] status
+      # @return [void]
       def status=(status)
         @inner.status = status
       end
@@ -49,7 +49,7 @@ module Tilia
       #
       # This is useful for debugging purposes.
       #
-      # @return string
+      # @return [String]
       def to_s
         @inner.to_s
       end

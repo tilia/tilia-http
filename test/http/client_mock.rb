@@ -27,7 +27,7 @@ module Tilia
       # This method is responsible for performing a single request.
       #
       # @param RequestInterface request
-      # @return ResponseInterface
+      # @return [ResponseInterface]
       def do_request(request)
         response = nil
 
@@ -70,7 +70,7 @@ module Tilia
       # This method exists so it can easily be overridden and mocked.
       #
       # @param resource curl_handle
-      # @return string
+      # @return [String]
       def curl_exec(curl_handle, request)
         to_return = nil
         curl_exec_arguments = CurlExecArguments.new(to_return)

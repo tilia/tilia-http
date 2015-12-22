@@ -55,7 +55,7 @@ module Tilia
     # See:
     #   http://tools.ietf.org/html/rfc7231#section-7.1.1.1
     #
-    # @param string date_string
+    # @param [String] date_string
     # @return bool|DateTime
     def self.parse_date(date_string)
       return false unless date_string
@@ -113,7 +113,7 @@ module Tilia
     # Transforms a DateTime object to a valid HTTP/1.1 Date header value
     #
     # @param DateTime date_time
-    # @return string
+    # @return [String]
     def self.to_date(date_time)
       # We need to clone it, as we don't want to affect the existing
       # DateTime.
@@ -135,9 +135,9 @@ module Tilia
     # The method also accepts sending 'null' for the accept_header_value,
     # implying that no accept header was sent.
     #
-    # @param string|null accept_header_value
+    # @param [String, nil] accept_header_value
     # @param array available_options
-    # @return string|null
+    # @return [String, nil]
     def self.negotiate_content_type(accept_header_value, available_options)
       unless accept_header_value
         # Grabbing the first in the list.
@@ -223,7 +223,7 @@ module Tilia
     # Parameters are currently discarded. There's no known prefer value that
     # uses them.
     #
-    # @param string|string[] header
+    # @param [String, Array<String>] header
     # @return array
     def self.parse_prefer(input)
       token = '[!#$%&\'*+\-.^_`~A-Za-z0-9]+'
@@ -285,9 +285,9 @@ $
     # If the second headers argument is set, this value will simply be merged
     # in. This makes it quicker to merge an old list of values with a new set.
     #
-    # @param string|string[] values
-    # @param string|string[] values2
-    # @return string[]
+    # @param [String, Array<String>] values
+    # @param [String, Array<String>] values2
+    # @return [String][]
     def self.header_values(values, values2 = nil)
       values = [values] unless values.is_a?(Array)
       if values2
@@ -312,7 +312,7 @@ $
     # 3. quality
     # 4. parameters
     #
-    # @param string str
+    # @param [String] str
     # @return array
     def self.parse_mime_type(str)
       parameters = {}
@@ -365,8 +365,8 @@ $
     #
     # slashes (/) are treated as path-separators.
     #
-    # @param string path
-    # @return string
+    # @param [String] path
+    # @return [String]
     def self.encode_path(path)
       path.gsub(%r{([^A-Za-z0-9_\-\.~\(\)\/:@])}) do |m|
         m.bytes.inject('') do |str, byte|
@@ -379,8 +379,8 @@ $
     #
     # Slashes are considered part of the name, and are encoded as %2f
     #
-    # @param string path_segment
-    # @return string
+    # @param [String] path_segment
+    # @return [String]
     def self.encode_path_segment(path_segment)
       path_segment.gsub(/([^A-Za-z0-9_\-\.~\(\):@])/) do |m|
         m.bytes.inject('') do |str, byte|
@@ -391,16 +391,16 @@ $
 
     # Decodes a url-encoded path
     #
-    # @param string path
-    # @return string
+    # @param [String] path
+    # @return [String]
     def self.decode_path(path)
       decode_path_segment(path)
     end
 
     # Decodes a url-encoded path segment
     #
-    # @param string path
-    # @return string
+    # @param [String] path
+    # @return [String]
     def self.decode_path_segment(path)
       path = URI.unescape(path)
       cd = CharDet.detect(path)

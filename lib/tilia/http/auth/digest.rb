@@ -46,7 +46,7 @@ module Tilia
         #
         # This method needs to be called prior to anything else.
         #
-        # @return void
+        # @return [void]
         def init
           digest = self.digest
           @digest_parts = parse_digest(digest)
@@ -65,14 +65,14 @@ module Tilia
         # request body to be md5'ed, which can put strains on CPU and memory.
         #
         # @param int qop
-        # @return void
+        # @return [void]
         attr_writer :qop
 
         # Validates the user.
         #
         # The A1 parameter should be md5(username . ':' . realm . ':' . password)
         #
-        # @param string a1
+        # @param [String] a1
         # @return bool
         def validate_a1(a1)
           @a1 = a1
@@ -82,7 +82,7 @@ module Tilia
         # Validates authentication through a password. The actual password must be provided here.
         # It is strongly recommended not store the password in plain-text and use validateA1 instead.
         #
-        # @param string password
+        # @param [String] password
         # @return bool
         def validate_password(password)
           return false unless @digest_parts.any? # RUBY
@@ -93,7 +93,7 @@ module Tilia
 
         # Returns the username for the request
         #
-        # @return string
+        # @return [String]
         def username
           @digest_parts['username']
         end
@@ -134,7 +134,7 @@ module Tilia
         #
         # This should be called when username and password are incorrect, or not supplied at all
         #
-        # @return void
+        # @return [void]
         def require_login
           qop = ''
           case @qop
@@ -167,7 +167,7 @@ module Tilia
         #
         # This method returns false if an incomplete digest was supplied
         #
-        # @param string digest
+        # @param [String] digest
         # @return mixed
         def parse_digest(digest)
           # protect against missing data

@@ -9,25 +9,25 @@ module Tilia
 
         # Authentication realm
         #
-        # @return string
+        # @return [String]
         attr_accessor :realm
 
         # Request object
         #
-        # @return RequestInterface
+        # @return [RequestInterface]
         attr_accessor :request
 
         # Response object
         #
-        # @return ResponseInterface
+        # @return [ResponseInterface]
         attr_accessor :response
 
         public
 
         # Creates the object
         #
-        # @param string realm
-        # @return void
+        # @param [String] realm
+        # @return [void]
         def initialize(realm = 'TiliaTooth', request, response)
           @realm = realm
           @request = request
@@ -37,13 +37,13 @@ module Tilia
         # This method sends the needed HTTP header and statuscode (401) to force
         # the user to login.
         #
-        # @return void
+        # @return [void]
         def require_login
         end
 
         # Returns the HTTP realm
         #
-        # @return string
+        # @return [String]
         attr_reader :realm
       end
     end

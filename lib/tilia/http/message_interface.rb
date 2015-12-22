@@ -17,7 +17,7 @@ module Tilia
       # Note that because the underlying data may be based on a stream, this
       # method could only work correctly the first time.
       #
-      # @return string
+      # @return [String]
       def body_as_string
       end
 
@@ -32,7 +32,7 @@ module Tilia
       # Updates the body resource with a new stream.
       #
       # @param resource body
-      # @return void
+      # @return [void]
       def body=(_body)
       end
 
@@ -46,7 +46,7 @@ module Tilia
 
       # Will return true or false, depending on if a HTTP header exists.
       #
-      # @param string name
+      # @param [String] name
       # @return bool
       def header?(_name)
       end
@@ -63,8 +63,8 @@ module Tilia
       # `Set-Cookie` cannot be logically combined with a comma. In those cases
       # you *should* use header_as_array.
       #
-      # @param string name
-      # @return string|null
+      # @param [String] name
+      # @return [String, nil]
       def header(_name)
       end
 
@@ -75,8 +75,8 @@ module Tilia
       #
       # If the header did not exists, this method will return an empty array.
       #
-      # @param string name
-      # @return string[]
+      # @param [String] name
+      # @return [String][]
       def header_as_array(_name)
       end
 
@@ -86,9 +86,9 @@ module Tilia
       #
       # If the header already existed, it will be overwritten.
       #
-      # @param string name
-      # @param string|string[] value
-      # @return void
+      # @param [String] name
+      # @param [String, Array<String>] value
+      # @return [void]
       def update_header(_name, _value)
       end
 
@@ -100,7 +100,7 @@ module Tilia
       # Any header that already existed will be overwritten.
       #
       # @param array headers
-      # @return void
+      # @return [void]
       def update_headers(_headers)
       end
 
@@ -110,9 +110,9 @@ module Tilia
       # another value. Individual values can be retrieved with
       # getHeadersAsArray.
       #
-      # @param string name
-      # @param string value
-      # @return void
+      # @param [String] name
+      # @param [String] value
+      # @return [void]
       def add_header(_name, _value)
       end
 
@@ -121,7 +121,7 @@ module Tilia
       # Any existing headers will not be overwritten.
       #
       # @param array headers
-      # @return void
+      # @return [void]
       def add_headers(_headers)
       end
 
@@ -139,14 +139,14 @@ module Tilia
       #
       # Should be 1.0 or 1.1.
       #
-      # @param string version
-      # @return void
+      # @param [String] version
+      # @return [void]
       def http_version=(_version)
       end
 
       # Returns the HTTP version.
       #
-      # @return string
+      # @return [String]
       def http_version
       end
     end

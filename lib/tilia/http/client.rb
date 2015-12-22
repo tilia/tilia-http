@@ -53,7 +53,7 @@ module Tilia
 
       # Initializes the client.
       #
-      # @return void
+      # @return [void]
       def initialize
         initialize_event_emitter_trait
 
@@ -70,7 +70,7 @@ module Tilia
       # Sends a request to a HTTP server, and returns a response.
       #
       # @param RequestInterface request
-      # @return ResponseInterface
+      # @return [ResponseInterface]
       def send(request)
         before_request_arguments = BeforeRequestArguments.new(request)
         emit('beforeRequest', [before_request_arguments])
@@ -157,7 +157,7 @@ module Tilia
       # @param RequestInterface request
       # @param callable success
       # @param callable error
-      # @return void
+      # @return [void]
       def send_async(request, success = nil, error = nil)
         before_request_arguments = BeforeRequestArguments.new(request)
         emit('beforeRequest', [before_request_arguments])
@@ -241,7 +241,7 @@ module Tilia
       # Processes every HTTP request in the queue, and waits till they are all
       # completed.
       #
-      # @return void
+      # @return [void]
       def wait
         loop do
           still_running = poll
@@ -259,7 +259,7 @@ module Tilia
       # send_async is not supported.
       #
       # @param bool throw_exceptions
-      # @return void
+      # @return [void]
       def throw_exceptions=(throw_exceptions)
         @throw_exceptions = throw_exceptions
       end
@@ -270,7 +270,7 @@ module Tilia
       #
       # @param int name
       # @param mixed value
-      # @return void
+      # @return [void]
       def add_curl_setting(name, value)
         @hydra_settings[name] = value
       end
@@ -280,7 +280,7 @@ module Tilia
       # This method is responsible for performing a single request.
       #
       # @param RequestInterface request
-      # @return ResponseInterface
+      # @return [ResponseInterface]
       def do_request(request)
         client = create_client(request)
         client.run
@@ -337,7 +337,7 @@ module Tilia
       #   * http_code - HTTP status code, as an int. Only set if Only set if
       #                 status is STATUS_SUCCESS, or STATUS_HTTPERROR
       #
-      # @param string response
+      # @param [String] response
       # @param resource curl_handle
       # @return Response
       def parse_curl_result(client)

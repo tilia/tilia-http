@@ -83,17 +83,17 @@ module Tilia
 
       # HTTP status text
       #
-      # @return string
+      # @return [String]
       attr_accessor :status_text
 
       public
 
       # Creates the response object
       #
-      # @param string|int status
+      # @param [String, Fixnum] status
       # @param array headers
       # @param resource body
-      # @return void
+      # @return [void]
       def initialize(status = nil, headers = nil, body = nil)
         initialize_message # RUBY
 
@@ -113,7 +113,7 @@ module Tilia
       #
       # In the case of a 200, this may for example be 'OK'.
       #
-      # @return string
+      # @return [String]
       def status_text
         @status_text
       end
@@ -126,9 +126,9 @@ module Tilia
       # Or just the code, in which case the appropriate default message will be
       # added.
       #
-      # @param string|int status
+      # @param [String, Fixnum] status
       # @throws \InvalidArgumentExeption
-      # @return void
+      # @return [void]
       def status=(status)
         if status.is_a?(Fixnum) || status =~ /^\d+$/
           status_code = status
@@ -150,7 +150,7 @@ module Tilia
       #
       # This is useful for debugging purposes.
       #
-      # @return string
+      # @return [String]
       def to_s
         str = "HTTP/#{http_version} #{status} #{status_text}\r\n"
         headers.each do |key, value|

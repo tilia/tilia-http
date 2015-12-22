@@ -13,20 +13,20 @@ module Tilia
 
       # HTTP Method
       #
-      # @return string
+      # @return [String]
       attr_accessor :method
 
       # Request Url
       #
-      # @return string
+      # @return [String]
       attr_accessor :url
 
       public
 
       # Creates the request object
       #
-      # @param string method
-      # @param string url
+      # @param [String] method
+      # @param [String] url
       # @param array headers
       # @param resource body
       def initialize(method = nil, url = nil, headers = nil, body = nil)
@@ -45,30 +45,30 @@ module Tilia
 
       # Returns the current HTTP method
       #
-      # @return string
+      # @return [String]
       def method
         @method
       end
 
       # Sets the HTTP method
       #
-      # @param string method
-      # @return void
+      # @param [String] method
+      # @return [void]
       def method=(method)
         @method = method
       end
 
       # Returns the request url.
       #
-      # @return string
+      # @return [String]
       def url
         @url
       end
 
       # Sets the request url.
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def url=(url)
         @url = url
       end
@@ -95,15 +95,15 @@ module Tilia
 
       # Sets the absolute url.
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def absolute_url=(url)
         @absolute_url = url
       end
 
       # Returns the absolute url.
       #
-      # @return string
+      # @return [String]
       def absolute_url
         @absolute_url
       end
@@ -112,7 +112,7 @@ module Tilia
 
       # Base url
       #
-      # @return string
+      # @return [String]
       attr_accessor :base_url
 
       public
@@ -121,15 +121,15 @@ module Tilia
       #
       # This url is used for relative path calculations.
       #
-      # @param string url
-      # @return void
+      # @param [String] url
+      # @return [void]
       def base_url=(url)
         @base_url = url
       end
 
       # Returns the current base url.
       #
-      # @return string
+      # @return [String]
       def base_url
         @base_url
       end
@@ -148,7 +148,7 @@ module Tilia
       #
       # If the path is outside of the base url, a LogicException will be thrown.
       #
-      # @return string
+      # @return [String]
       def path
         # Removing duplicated slashes.
         uri = url.gsub('//', '/')
@@ -186,7 +186,7 @@ module Tilia
       # php://input, but unfortunately we need to special case it.
       #
       # @param array post_data
-      # @return void
+      # @return [void]
       def post_data=(post_data)
         @post_data = post_data
       end
@@ -213,8 +213,8 @@ module Tilia
       #
       # If the value does not exist in the array, null is returned.
       #
-      # @param string value_name
-      # @return string|null
+      # @param [String] value_name
+      # @return [String, nil]
       def raw_server_value(value_name)
         @raw_server_data[value_name]
       end
@@ -222,7 +222,7 @@ module Tilia
       # Sets the _SERVER array.
       #
       # @param array data
-      # @return void
+      # @return [void]
       def raw_server_data=(data)
         @raw_server_data = data.dup
       end
@@ -231,7 +231,7 @@ module Tilia
       #
       # This is useful for debugging purposes.
       #
-      # @return string
+      # @return [String]
       def to_s
         out = "#{method} #{url} HTTP/#{http_version}\r\n"
 

@@ -26,7 +26,7 @@ module Tilia
         # This method sends the needed HTTP header and statuscode (401) to force
         # authentication.
         #
-        # @return void
+        # @return [void]
         def require_login
           @response.add_header('WWW-Authenticate', "Bearer realm=\"#{@realm}\"")
           @response.status = 401
