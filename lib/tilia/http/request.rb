@@ -46,32 +46,24 @@ module Tilia
       # Returns the current HTTP method
       #
       # @return [String]
-      def method
-        @method
-      end
+      attr_reader :method
 
       # Sets the HTTP method
       #
       # @param [String] method
       # @return [void]
-      def method=(method)
-        @method = method
-      end
+      attr_writer :method
 
       # Returns the request url.
       #
       # @return [String]
-      def url
-        @url
-      end
+      attr_reader :url
 
       # Sets the request url.
       #
       # @param [String] url
       # @return [void]
-      def url=(url)
-        @url = url
-      end
+      attr_writer :url
 
       # Returns the list of query parameters.
       #
@@ -97,16 +89,12 @@ module Tilia
       #
       # @param [String] url
       # @return [void]
-      def absolute_url=(url)
-        @absolute_url = url
-      end
+      attr_writer :absolute_url
 
       # Returns the absolute url.
       #
       # @return [String]
-      def absolute_url
-        @absolute_url
-      end
+      attr_reader :absolute_url
 
       protected
 
@@ -123,16 +111,12 @@ module Tilia
       #
       # @param [String] url
       # @return [void]
-      def base_url=(url)
-        @base_url = url
-      end
+      attr_writer :base_url
 
       # Returns the current base url.
       #
       # @return [String]
-      def base_url
-        @base_url
-      end
+      attr_reader :base_url
 
       # Returns the relative path.
       #
@@ -187,18 +171,14 @@ module Tilia
       #
       # @param array post_data
       # @return [void]
-      def post_data=(post_data)
-        @post_data = post_data
-      end
+      attr_writer :post_data
 
       # Returns the POST data.
       #
       # This is equivalent to PHP's $_POST superglobal.
       #
       # @return array
-      def post_data
-        @post_data
-      end
+      attr_reader :post_data
 
       protected
 

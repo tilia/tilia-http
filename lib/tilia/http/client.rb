@@ -31,7 +31,6 @@ module Tilia
     # It's also possible to intercept specific http errors, by subscribing to for
     # example 'error:401'.
     class Client < Tilia::Event::EventEmitter
-
       protected
 
       # List of curl settings
@@ -72,9 +71,7 @@ module Tilia
       # @param RequestInterface request
       # @return [ResponseInterface]
       def send(request)
-        before_request_arguments = BeforeRequestArguments.new(request)
-        emit('beforeRequest', [before_request_arguments])
-        (request,) = before_request_arguments.to_a
+        emit('beforeRequest', [request])
 
         retry_count = 0
         redirects = 0
@@ -116,15 +113,15 @@ module Tilia
 
             # This was a HTTP error
             if code >= 400
-              error_arguments = ErrorArguments.new(request, response, do_retry, retry_count)
-              emit('error', [error_arguments])
-              emit("error:#{code}", [error_arguments])
-              (request, response, do_retry, retry_count) = error_arguments.to_a
+              box = Box.new(do_retry)
+              emit('error', [request, response, box, retry_count])
+              emit("error:#{code}", [request, response, box, retry_count])
+              do_retry = box.value
             end
           rescue Tilia::Http::ClientException => e
-            exception_arguments = ExceptionArguments.new(request, e, do_retry, retry_count)
-            emit('exception', [exception_arguments])
-            (request, e, do_retry, retry_count) = exception_arguments.to_a
+            box = Box.new(do_retry)
+            emit('exception', [request, e, box, retry_count])
+            do_retry = box.value
 
             # If retry was still set to false, it means no event handler
             # dealt with the problem. In this case we just re-throw the
@@ -137,9 +134,7 @@ module Tilia
           break unless do_retry || do_redirect
         end
 
-        after_request_arguments = AfterRequestArguments.new(request, response)
-        emit('afterRequest', [after_request_arguments])
-        (request, response) = after_request_arguments.to_a
+        emit('afterRequest', [request, response])
 
         fail Tilia::Http::ClientHttpException.new(response), 'Oh oh' if @throw_exceptions && code >= 400
 
@@ -159,9 +154,7 @@ module Tilia
       # @param callable error
       # @return [void]
       def send_async(request, success = nil, error = nil)
-        before_request_arguments = BeforeRequestArguments.new(request)
-        emit('beforeRequest', [before_request_arguments])
-        (request,) = before_request_arguments.to_a
+        emit('beforeRequest', [request])
 
         send_async_internal(request, success, error)
         poll
@@ -196,9 +189,9 @@ module Tilia
           if curl_result['status'] == self.class::STATUS_CURLERROR
             e = Exception.new
 
-            exception_arguments = ExceptionArguments.new(request, e, do_retry, retry_count)
-            emit('exception', [exception_arguments])
-            (request, e, do_retry, retry_count) = exception_arguments.to_a
+            box = Box.new(do_retry)
+            emit('exception', [request, e, box, retry_count])
+            do_retry = box.value
 
             if do_retry
               retry_count += 1
@@ -210,10 +203,10 @@ module Tilia
 
             error_callback.call(curl_result) if error_callback
           elsif curl_result['status'] == self.class::STATUS_HTTPERROR
-            error_arguments = ErrorArguments.new(request, curl_result['response'], do_retry, retry_count)
-            emit('error', [error_arguments])
-            emit("error:#{curl_result['http_code']}", [error_arguments])
-            (request, response, do_retry, retry_count) = error_arguments.to_a
+            box = Box.new(do_retry)
+            emit('error', [request, curl_result['response'], box, retry_count])
+            emit("error:#{curl_result['http_code']}", [request, curl_result['response'], box, retry_count])
+            do_retry = box.value
 
             if do_retry
               retry_count += 1
@@ -225,9 +218,7 @@ module Tilia
 
             error_callback.call(curl_result) if error_callback
           else
-            after_request_arguments = AfterRequestArguments.new(request, curl_result['response'])
-            emit('afterRequest', [after_request_arguments])
-            (request, response) = after_request_arguments.to_a
+            emit('afterRequest', [request, curl_result['response']])
 
             success_callback.call(curl_result['response']) if success_callback
           end
@@ -260,9 +251,7 @@ module Tilia
       #
       # @param bool throw_exceptions
       # @return [void]
-      def throw_exceptions=(throw_exceptions)
-        @throw_exceptions = throw_exceptions
-      end
+      attr_writer :throw_exceptions
 
       # Adds a CURL setting.
       #
@@ -449,12 +438,15 @@ module Tilia
         client = Typhoeus::Request.new(request.url, settings)
         client
       end
+    end
 
-      # TODO: document
-      BeforeRequestArguments = Struct.new(:request)
-      AfterRequestArguments = Struct.new(:request, :response)
-      ErrorArguments = Struct.new(:request, :response, :retry, :retry_count)
-      ExceptionArguments = Struct.new(:request, :exception, :retry, :retry_count)
+    # Class to fix rubys real-world "pass-by-reference" shortcommings
+    class Box
+      attr_accessor :value
+
+      def initialize(v = nil)
+        @value = v
+      end
     end
   end
 end

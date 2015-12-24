@@ -105,18 +105,14 @@ module Tilia
       # Returns the current HTTP status code.
       #
       # @return int
-      def status
-        @status
-      end
+      attr_reader :status
 
       # Returns the human-readable status string.
       #
       # In the case of a 200, this may for example be 'OK'.
       #
       # @return [String]
-      def status_text
-        @status_text
-      end
+      attr_reader :status_text
 
       # Sets the HTTP status code.
       #

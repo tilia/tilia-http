@@ -6,7 +6,6 @@ module Tilia
     # Didn't seem needed to create a full class for this, so we're just
     # implementing it as a trait.
     module MessageDecoratorTrait
-
       protected
 
       # The inner request object.

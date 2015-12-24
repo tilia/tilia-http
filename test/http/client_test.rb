@@ -135,7 +135,7 @@ module Tilia
         called = false
         client.on(
           'exception',
-          lambda do |_|
+          lambda do |_a, _b, _c, _d|
             called = true
           end
         )
@@ -159,13 +159,13 @@ module Tilia
         called = 0
         client.on(
           'error',
-          lambda do |_|
+          lambda do |_a, _b, _c, _d|
             called += 1
           end
         )
         client.on(
           'error:404',
-          lambda do |_|
+          lambda do |_a, _b, _c, _d|
             called += 1
           end
         )
@@ -194,9 +194,9 @@ module Tilia
         error_called = 0
         client.on(
           'error',
-          lambda do |args|
+          lambda do |_a, _b, do_retry, _d|
             error_called += 1
-            args.retry = true
+            do_retry.value = true
           end
         )
 
