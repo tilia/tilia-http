@@ -40,6 +40,22 @@ Simply add tilia-http to your Gemfile and bundle it up:
 ```
 
 
+Changes to sabre/http
+---------------------
+
+```php
+  Sabre\HTTP\Message#setHeader($name, $value)
+  Sabre\HTTP\Message#setHeader(array $headers)
+```
+
+are replaced by
+
+```ruby
+  Tilia::Http::Message#update_header(name, value)
+  Tilia::Http::Message#update_headers(headers)
+```
+
+
 Contributing
 ------------
 
