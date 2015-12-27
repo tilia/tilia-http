@@ -48,7 +48,7 @@ module Tilia
         #
         # @return [void]
         def init
-          digest = self.digest
+          digest = self.digest || ''
           @digest_parts = parse_digest(digest)
         end
 
