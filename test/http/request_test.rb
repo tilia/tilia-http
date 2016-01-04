@@ -37,8 +37,8 @@ module Tilia
 
       def test_get_absolute_url
         s = {
-          'HTTP_HOST'   => 'sabredav.org',
-          'REQUEST_URI' => '/foo'
+          'HTTP_HOST'    => 'sabredav.org',
+          'REQUEST_PATH' => '/foo'
         }
 
         r = Sapi.create_from_server_array(s)
@@ -46,9 +46,9 @@ module Tilia
         assert_equal('http://sabredav.org/foo', r.absolute_url)
 
         s = {
-          'HTTP_HOST'   => 'sabredav.org',
-          'REQUEST_URI' => '/foo',
-          'HTTPS'       => 'on'
+          'HTTP_HOST'    => 'sabredav.org',
+          'REQUEST_PATH' => '/foo',
+          'HTTPS'        => 'on'
         }
 
         r = Sapi.create_from_server_array(s)

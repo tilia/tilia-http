@@ -79,7 +79,7 @@ module Tilia
             http_version = '1.0' if value == 'HTTP/1.0'
           when 'REQUEST_METHOD'
             method = value
-          when 'REQUEST_URI'
+          when 'REQUEST_PATH'
             url = value
 
           # These sometimes should up without a HTTP_ prefix
@@ -129,6 +129,9 @@ module Tilia
             end
           end
         end
+
+        # RUBY: fake php ...
+        url = "#{url}?#{server_array['QUERY_STRING']}" if url && !server_array['QUERY_STRING'].blank?
 
         r = Tilia::Http::Request.new(method, url, headers)
         r.http_version = http_version
