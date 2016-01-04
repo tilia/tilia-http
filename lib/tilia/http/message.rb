@@ -236,6 +236,11 @@ module Tilia
         @headers = {}
         @http_version = '1.1'
       end
+
+      # TODO: document
+      def initialize_copy(_original)
+        @headers = @headers.deep_dup
+      end
     end
   end
 end
