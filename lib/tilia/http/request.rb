@@ -135,7 +135,7 @@ module Tilia
       # @return [String]
       def path
         # Removing duplicated slashes.
-        uri = url.gsub('//', '/')
+        uri = (url || '').gsub('//', '/')
 
         uri = Tilia::Uri.normalize(uri)
         base_uri = Tilia::Uri.normalize(base_url)

@@ -3,7 +3,7 @@ module Tilia
     # This class contains the version number for the HTTP package
     class Version
       # Full version number
-      VERSION = '4.1.0.2'
+      VERSION = '4.1.0.3'
     end
   end
 end
