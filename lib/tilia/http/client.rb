@@ -59,7 +59,7 @@ module Tilia
         @hydra = nil
         @throw_exceptions = false
         @max_redirects = 5
-        @hydra_settings = {
+        @curl_settings = {
           header: false, # RUBY otherwise header will be part of response.body
           nobody: false
         }
@@ -261,7 +261,7 @@ module Tilia
       # @param mixed value
       # @return [void]
       def add_curl_setting(name, value)
-        @hydra_settings[name] = value
+        @curl_settings[name] = value
       end
 
       protected
@@ -403,7 +403,7 @@ module Tilia
       # TODO: document
       def create_client(request)
         settings = {}
-        @hydra_settings.each do |key, value|
+        @curl_settings.each do |key, value|
           settings[key] = value
         end
 
