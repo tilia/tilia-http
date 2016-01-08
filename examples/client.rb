@@ -14,7 +14,7 @@ request = Tilia::Http::Request.new('GET', 'http://www.jakobsack.de/')
 
 client = Tilia::Http::Client.new
 # client.add_curl_setting(proxy: 'localhost:8888')
-response = client.send(request)
+response = client.send_request(request)
 
 puts 'Response:'
 puts response.to_s

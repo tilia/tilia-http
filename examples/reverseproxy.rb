@@ -30,7 +30,7 @@ app = proc do |env|
   client = Tilia::Http::Client.new
 
   # Sends the HTTP request to the server
-  response = client.send(sub_request)
+  response = client.send_request(sub_request)
 
   # Sends the response back to the client that connected to the proxy.
   sapi.send_response(response)
