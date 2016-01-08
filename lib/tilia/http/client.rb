@@ -70,7 +70,7 @@ module Tilia
       #
       # @param RequestInterface request
       # @return [ResponseInterface]
-      def send(request)
+      def send_request(request)
         emit('beforeRequest', [request])
 
         retry_count = 0

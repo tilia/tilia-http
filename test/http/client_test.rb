@@ -116,7 +116,7 @@ module Tilia
           end
         )
 
-        response = client.send(request)
+        response = client.send_request(request)
 
         assert_equal(200, response.status)
       end
@@ -140,7 +140,7 @@ module Tilia
           end
         )
 
-        assert_raises(ClientException) { client.send(request) }
+        assert_raises(ClientException) { client.send_request(request) }
 
         assert(called)
       end
@@ -170,7 +170,7 @@ module Tilia
           end
         )
 
-        client.send(request)
+        client.send_request(request)
         assert_equal(2, called)
       end
 
@@ -200,7 +200,7 @@ module Tilia
           end
         )
 
-        response = client.send(request)
+        response = client.send_request(request)
         assert_equal(3, called)
         assert_equal(2, error_called)
         assert_equal(200, response.status)
@@ -218,7 +218,7 @@ module Tilia
           end
         )
 
-        error = assert_raises(Exception) { client.send(request) }
+        error = assert_raises(Exception) { client.send_request(request) }
         assert_kind_of(ClientHttpException, error)
         assert_equal(404, error.http_status)
         assert_kind_of(Response, error.response)
