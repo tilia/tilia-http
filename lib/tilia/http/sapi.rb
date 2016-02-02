@@ -151,8 +151,8 @@ module Tilia
       # TODO: document
       def request
         r = create_from_server_array(@env)
-        r.body = StringIO.new
         r.post_data = @rack_request.POST
+        r.body = @rack_request.body
         r
       end
 
