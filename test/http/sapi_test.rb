@@ -8,7 +8,7 @@ module Tilia
     class SapiTest < Minitest::Test
       def test_construct_from_server_array
         request = Sapi.create_from_server_array(
-          'REQUEST_PATH'    => '/foo',
+          'PATH_INFO'    => '/foo',
           'REQUEST_METHOD'  => 'GET',
           'HTTP_USER_AGENT' => 'Evert',
           'CONTENT_TYPE'    => 'text/xml',
@@ -35,7 +35,7 @@ module Tilia
 
       def test_construct_php_auth
         request = Sapi.create_from_server_array(
-          'REQUEST_PATH'    => '/foo',
+          'PATH_INFO'    => '/foo',
           'REQUEST_METHOD'  => 'GET',
           'PHP_AUTH_USER'   => 'user',
           'PHP_AUTH_PW'     => 'pass'
@@ -53,7 +53,7 @@ module Tilia
 
       def test_construct_php_auth_digest
         request = Sapi.create_from_server_array(
-          'REQUEST_PATH'    => '/foo',
+          'PATH_INFO'    => '/foo',
           'REQUEST_METHOD'  => 'GET',
           'PHP_AUTH_DIGEST' => 'blabla'
         )
@@ -70,7 +70,7 @@ module Tilia
 
       def test_construct_redirect_auth
         request = Sapi.create_from_server_array(
-          'REQUEST_PATH'                => '/foo',
+          'PATH_INFO'                => '/foo',
           'REQUEST_METHOD'              => 'GET',
           'REDIRECT_HTTP_AUTHORIZATION' => 'Basic bla'
         )

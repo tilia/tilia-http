@@ -67,7 +67,7 @@ module Tilia
       def self.create_from_server_array(server_array)
         headers = {}
         method = nil
-        url = nil
+        url = ''
         http_version = '1.1'
 
         protocol = 'http'
@@ -79,8 +79,10 @@ module Tilia
             http_version = '1.0' if value == 'HTTP/1.0'
           when 'REQUEST_METHOD'
             method = value
-          when 'REQUEST_PATH'
-            url = value
+          when 'PATH_INFO'
+            url += value
+          when 'SCRIPT_NAME'
+            url = value + url
 
           # These sometimes should up without a HTTP_ prefix
           when 'CONTENT_TYPE'
@@ -131,7 +133,7 @@ module Tilia
         end
 
         # RUBY: fake php ...
-        url = "#{url}?#{server_array['QUERY_STRING']}" if url && !server_array['QUERY_STRING'].blank?
+        url = "#{url}?#{server_array['QUERY_STRING']}" if url && server_array['QUERY_STRING'].present?
 
         r = Tilia::Http::Request.new(method, url, headers)
         r.http_version = http_version
