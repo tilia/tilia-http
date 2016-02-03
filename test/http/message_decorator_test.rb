@@ -10,8 +10,8 @@ module Tilia
 
       def test_body
         @outer.body = 'foo'
-        assert_equal('foo', @inner.body_as_stream.readlines.join(''))
-        assert_equal('foo', @outer.body_as_stream.readlines.join(''))
+        assert_equal('foo', @inner.body_as_stream.read)
+        assert_equal('foo', @outer.body_as_stream.read)
         assert_equal('foo', @inner.body_as_string)
         assert_equal('foo', @outer.body_as_string)
         assert_equal('foo', @inner.body)

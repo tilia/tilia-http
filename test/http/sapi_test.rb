@@ -101,7 +101,7 @@ module Tilia
           headers
         )
 
-        assert_equal('foo', body.readlines.join(''))
+        assert_equal('foo', body.read)
       end
 
       def test_send_limited_by_content_length_string
@@ -112,7 +112,7 @@ module Tilia
 
         (_status, _headers, body) = Sapi.send_response(response)
 
-        assert_equal('Send this sentence.', body.readlines.join(''))
+        assert_equal('Send this sentence.', body.read)
       end
 
       def test_send_limited_by_content_length_stream
@@ -126,7 +126,7 @@ module Tilia
 
         (_status, _headers, body) = Sapi.send_response(response)
 
-        assert_equal('Send this sentence.', body.readlines.join(''))
+        assert_equal('Send this sentence.', body.read)
       end
     end
   end

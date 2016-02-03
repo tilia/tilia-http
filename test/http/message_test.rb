@@ -20,9 +20,9 @@ module Tilia
 
         assert_equal(body, message.body_as_string)
         h.rewind
-        assert_equal(body, message.body_as_stream.readlines.join(''))
+        assert_equal(body, message.body_as_stream.read)
         h.rewind
-        assert_equal(body, message.body.readlines.join(''))
+        assert_equal(body, message.body.read)
       end
 
       def test_string_body
@@ -32,7 +32,7 @@ module Tilia
         message.body = body
 
         assert_equal(body, message.body_as_string)
-        assert_equal(body, message.body_as_stream.readlines.join(''))
+        assert_equal(body, message.body_as_stream.read)
         assert_equal(body, message.body)
       end
 
@@ -40,7 +40,7 @@ module Tilia
         message = MessageMock.new
         body = message.body_as_stream
 
-        assert_equal('', body.readlines.join(''))
+        assert_equal('', body.read)
       end
 
       def test_get_empty_body_string
@@ -126,7 +126,7 @@ module Tilia
         body = message.body
         body.rewind
 
-        assert_equal('bar', body.readlines.join(''))
+        assert_equal('bar', body.read)
       end
 
       def test_multiple_headers

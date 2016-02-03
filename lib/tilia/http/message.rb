@@ -58,7 +58,7 @@ module Tilia
         elsif body.nil?
           ''
         else
-          body.readlines.join("\n")
+          body.read
         end
       end
 
