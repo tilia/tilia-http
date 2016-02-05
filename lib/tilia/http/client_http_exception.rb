@@ -5,15 +5,6 @@ module Tilia
     # By default the Client will not emit these, this has to be explicitly enabled
     # with the setThrowExceptions method.
     class ClientHttpException < Tilia::Http::HttpException
-      protected
-
-      # Response object
-      #
-      # @return [ResponseInterface]
-      attr_accessor :response
-
-      public
-
       # Constructor
       #
       # @param ResponseInterface response

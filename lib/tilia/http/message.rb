@@ -7,27 +7,6 @@ module Tilia
     module Message
       include Tilia::Http::MessageInterface
 
-      protected
-
-      # Request body
-      #
-      # This should be a stream resource
-      #
-      # @return resource
-      attr_accessor :body
-
-      # Contains the list of HTTP headers
-      #
-      # @return array
-      attr_accessor :headers
-
-      # HTTP message version (1.0 or 1.1)
-      #
-      # @return [String]
-      attr_accessor :http_version
-
-      public
-
       # Returns the body as a readable stream resource.
       #
       # Note that the stream may not be rewindable, and therefore may only be
@@ -35,7 +14,7 @@ module Tilia
       #
       # @return resource
       def body_as_stream
-        body = self.body
+        body = @body
         if body.is_a?(String) || body.nil?
           stream = StringIO.new
           stream.write body
@@ -52,13 +31,19 @@ module Tilia
       #
       # @return [String]
       def body_as_string
-        body = self.body
+        body = @body
         if body.is_a?(String)
           body
         elsif body.nil?
           ''
         else
-          body.read
+          content_length = header('Content-Length')
+
+          if content_length.present?
+            body.read(content_length.to_i)
+          else
+            body.read
+          end
         end
       end
 
@@ -67,16 +52,12 @@ module Tilia
       # This could be either a string or a stream.
       #
       # @return resource|string
-      def body
-        @body
-      end
+      attr_reader :body
 
       # Replaces the body resource with a new stream or string.
       #
       # @param resource|string body
-      def body=(body)
-        @body = body
-      end
+      attr_writer :body
 
       # Returns all the HTTP headers as an array.
       #
@@ -219,16 +200,12 @@ module Tilia
       #
       # @param [String] version
       # @return [void]
-      def http_version=(version)
-        @http_version = version
-      end
+      attr_writer :http_version
 
       # Returns the HTTP version.
       #
       # @return [String]
-      def http_version
-        @http_version
-      end
+      attr_reader :http_version
 
       # TODO: document
       def initialize_message

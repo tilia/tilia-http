@@ -6,17 +6,6 @@ module Tilia
     # Didn't seem needed to create a full class for this, so we're just
     # implementing it as a trait.
     module MessageDecoratorTrait
-      protected
-
-      # The inner request object.
-      #
-      # All method calls will be forwarded here.
-      #
-      # @return MessageInterface
-      attr_accessor :inner
-
-      public
-
       # Returns the body as a readable stream resource.
       #
       # Note that the stream may not be rewindable, and therefore may only be

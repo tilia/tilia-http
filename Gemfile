@@ -1,14 +1,6 @@
 source 'https://rubygems.org'
 
-# Internal dependencies
-gem 'tilia-event', '~> 2.0'
-gem 'tilia-uri', '~> 1.0'
-
-# External dependencies
-gem 'activesupport', '~> 4.2'
-gem 'typhoeus', '~> 0.8'
-gem 'rchardet', '~>1.6'
-gem 'rack', '~> 1.6'
+gemspec
 
 # Testing
 gem 'rake'

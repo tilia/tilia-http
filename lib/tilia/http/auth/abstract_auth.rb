@@ -5,25 +5,6 @@ module Tilia
       #
       # This class provides some common functionality for the various base classes.
       class AbstractAuth
-        protected
-
-        # Authentication realm
-        #
-        # @return [String]
-        attr_accessor :realm
-
-        # Request object
-        #
-        # @return [RequestInterface]
-        attr_accessor :request
-
-        # Response object
-        #
-        # @return [ResponseInterface]
-        attr_accessor :response
-
-        public
-
         # Creates the object
         #
         # @param [String] realm

@@ -129,7 +129,7 @@ module Tilia
           'foo/'                     => ['', 'foo'],
           '/foo/'                    => ['', 'foo'],
           '/foo'                     => ['', 'foo'],
-          ''                         => [nil, nil],
+          ''                         => ['', ''],
 
           # UTF-8
           "/\xC3\xA0fo\xC3\xB3/bar"  => ["/\xC3\xA0fo\xC3\xB3", 'bar'],

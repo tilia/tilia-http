@@ -74,20 +74,6 @@ module Tilia
         }
       end
 
-      protected
-
-      # HTTP status code
-      #
-      # @return int
-      attr_accessor :status
-
-      # HTTP status text
-      #
-      # @return [String]
-      attr_accessor :status_text
-
-      public
-
       # Creates the response object
       #
       # @param [String, Fixnum] status

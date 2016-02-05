@@ -23,19 +23,9 @@ module Tilia
         QOP_AUTH = 1
         QOP_AUTHINT = 2
 
-        protected
-
-        attr_accessor :nonce
-        attr_accessor :opaque
-        attr_accessor :digest_parts
-        attr_accessor :a1
-        attr_reader :qop
-
-        public
-
         # Initializes the object
         def initialize(realm = 'TiliaTooth', request, response)
-          @qop = self.class::QOP_AUTH
+          @qop = QOP_AUTH
 
           @nonce = ::Digest::SHA1.hexdigest((Time.now.to_f + rand).to_s)[0..14]
           @opaque = ::Digest::MD5.hexdigest(realm)
@@ -110,7 +100,7 @@ module Tilia
 
           if @digest_parts['qop'] == 'auth-int'
             # Making sure we support this qop value
-            return false unless @qop & self.class::QOP_AUTHINT
+            return false unless @qop & QOP_AUTHINT
 
             # We need to add an md5 of the entire request body to the A2 part of the hash
             body = @request.body_as_string
@@ -119,7 +109,7 @@ module Tilia
             a2 << ':' + ::Digest::MD5.hexdigest(body)
           else
             # We need to make sure we support this qop value
-            return false unless @qop & self.class::QOP_AUTH
+            return false unless @qop & QOP_AUTH
           end
 
           a2 = ::Digest::MD5.hexdigest(a2)
@@ -138,11 +128,11 @@ module Tilia
         def require_login
           qop = ''
           case @qop
-          when self.class::QOP_AUTH
+          when QOP_AUTH
             qop = 'auth'
-          when self.class::QOP_AUTHINT
+          when QOP_AUTHINT
             qop = 'auth-int'
-          when self.class::QOP_AUTH | self.class::QOP_AUTHINT
+          when QOP_AUTH | QOP_AUTHINT
             qop = 'auth,auth-int'
           end
 

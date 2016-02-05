@@ -31,25 +31,6 @@ module Tilia
     # It's also possible to intercept specific http errors, by subscribing to for
     # example 'error:401'.
     class Client < Tilia::Event::EventEmitter
-      protected
-
-      # List of curl settings
-      #
-      # @return array
-      attr_accessor :curl_settings
-
-      # Wether or not exceptions should be thrown when a HTTP error is returned.
-      #
-      # @return bool
-      attr_accessor :throw_exceptions
-
-      # The maximum number of times we'll follow a redirect.
-      #
-      # @return int
-      attr_accessor :max_redirects
-
-      public
-
       # Initializes the client.
       #
       # @return [void]
@@ -61,7 +42,8 @@ module Tilia
         @max_redirects = 5
         @curl_settings = {
           header: false, # RUBY otherwise header will be part of response.body
-          nobody: false
+          nobody: false,
+          useragent: "tilia-http/#{Version::VERSION} (http://sabre.io/)"
         }
         @client_map = {}
       end
@@ -186,7 +168,7 @@ module Tilia
           curl_result = parse_curl_result(handler)
           do_retry = false
 
-          if curl_result['status'] == self.class::STATUS_CURLERROR
+          if curl_result['status'] == STATUS_CURLERROR
             e = Exception.new
 
             box = Box.new(do_retry)
@@ -202,7 +184,7 @@ module Tilia
             curl_result['request'] = request
 
             error_callback.call(curl_result) if error_callback
-          elsif curl_result['status'] == self.class::STATUS_HTTPERROR
+          elsif curl_result['status'] == STATUS_HTTPERROR
             box = Box.new(do_retry)
             emit('error', [request, curl_result['response'], box, retry_count])
             emit("error:#{curl_result['http_code']}", [request, curl_result['response'], box, retry_count])
@@ -276,35 +258,12 @@ module Tilia
 
         response = parse_curl_result(client)
 
-        if response['status'] == self.class::STATUS_CURLERROR
+        if response['status'] == STATUS_CURLERROR
           fail Tilia::Http::ClientException.new(response['curl_errno']), response['curl_errmsg']
         end
 
         response['response']
       end
-
-      protected
-
-      # Cached curl handle.
-      #
-      # By keeping this resource around for the lifetime of this object, things
-      # like persistent connections are possible.
-      #
-      # @return resource
-      attr_accessor :curl_handle
-
-      # Handler for curl_multi requests.
-      #
-      # The first time sendAsync is used, this will be created.
-      #
-      # @return resource
-      attr_accessor :curl_multi_handle
-
-      # Has a list of curl handles, as well as their associated success and
-      # error callbacks.
-      #
-      # @return array
-      attr_accessor :curl_multi_map
 
       public
 
@@ -333,7 +292,7 @@ module Tilia
         client_response = client.response
         unless client_response.return_code == :ok
           return {
-            'status'      => self.class::STATUS_CURLERROR,
+            'status'      => STATUS_CURLERROR,
             'curl_errno'  => client_response.return_code,
             'curl_errmsg' => client_response.return_message
           }
@@ -371,7 +330,7 @@ module Tilia
         http_code = response.status.to_i
 
         {
-          'status'    => http_code >= 400 ? self.class::STATUS_HTTPERROR : self.class::STATUS_SUCCESS,
+          'status'    => http_code >= 400 ? STATUS_HTTPERROR : STATUS_SUCCESS,
           'response'  => response,
           'http_code' => http_code
         }

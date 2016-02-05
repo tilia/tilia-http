@@ -9,20 +9,6 @@ module Tilia
       include Tilia::Http::Message
       include Tilia::Http::RequestInterface
 
-      protected
-
-      # HTTP Method
-      #
-      # @return [String]
-      attr_accessor :method
-
-      # Request Url
-      #
-      # @return [String]
-      attr_accessor :url
-
-      public
-
       # Creates the request object
       #
       # @param [String] method
@@ -96,15 +82,6 @@ module Tilia
       # @return [String]
       attr_reader :absolute_url
 
-      protected
-
-      # Base url
-      #
-      # @return [String]
-      attr_accessor :base_url
-
-      public
-
       # Sets a base url.
       #
       # This url is used for relative path calculations.
@@ -153,15 +130,6 @@ module Tilia
         fail "Requested uri (#{url}) is out of base uri (#{base_url})"
       end
 
-      protected
-
-      # Equivalent of PHP's $_POST.
-      #
-      # @return array
-      attr_accessor :post_data
-
-      public
-
       # Sets the post data.
       #
       # This is equivalent to PHP's $_POST superglobal.
@@ -179,15 +147,6 @@ module Tilia
       #
       # @return array
       attr_reader :post_data
-
-      protected
-
-      # An array containing the raw _SERVER array.
-      #
-      # @return array
-      attr_accessor :raw_server_data
-
-      public
 
       # Returns an item from the _SERVER array.
       #

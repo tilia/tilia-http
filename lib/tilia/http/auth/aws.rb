@@ -8,20 +8,6 @@ module Tilia
       #
       # Use this class to leverage amazon's AWS authentication header
       class Aws < Tilia::Http::Auth::AbstractAuth
-        protected
-
-        # The signature supplied by the HTTP client
-        #
-        # @return [String]
-        attr_accessor :signature
-
-        # The accesskey supplied by the HTTP client
-        #
-        # @return [String]
-        attr_accessor :access_key
-
-        public
-
         # An error code, if any
         #
         # This value will be filled with one of the ERR_* constants
@@ -45,7 +31,7 @@ module Tilia
           auth_header = auth_header.split(' ')
 
           if auth_header[0] != 'AWS' || auth_header.size < 2
-            @error_code = self.class::ERR_NOAWSHEADER
+            @error_code = ERR_NOAWSHEADER
             return false
           end
 
@@ -66,14 +52,14 @@ module Tilia
         def validate(secret_key)
           content_md5 = @request.header('Content-MD5')
 
-          if content_md5
+          if content_md5.present?
             # We need to validate the integrity of the request
             body = @request.body
             @request.body = body
 
             if content_md5 != Base64.strict_encode64(::Digest::MD5.digest(body.to_s))
               # content-md5 header did not match md5 signature of body
-              @error_code = self.class::ERR_MD5CHECKSUMWRONG
+              @error_code = ERR_MD5CHECKSUMWRONG
               return false
             end
           end
@@ -98,7 +84,7 @@ module Tilia
           )
 
           unless @signature == signature
-            @error_code = self.class::ERR_INVALIDSIGNATURE
+            @error_code = ERR_INVALIDSIGNATURE
             return false
           end
           true
@@ -131,7 +117,7 @@ module Tilia
 
           # Unknown format
           unless date
-            @error_code = self.class::ERR_INVALIDDATEFORMAT
+            @error_code = ERR_INVALIDDATEFORMAT
             return false
           end
 
@@ -140,7 +126,7 @@ module Tilia
 
           # We allow 15 minutes around the current date/time
           if date > max || date < min
-            @error_code = self.class::ERR_REQUESTTIMESKEWED
+            @error_code = ERR_REQUESTTIMESKEWED
             return false
           end
 
@@ -180,7 +166,7 @@ module Tilia
           OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), key, message)
         end
 
-        # TODO: document
+        # Initialize instance variables
         def initialize(realm = 'TiliaTooth', request, response)
           super
           @error_code = 0

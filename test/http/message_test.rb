@@ -36,6 +36,30 @@ module Tilia
         assert_equal(body, message.body)
       end
 
+      # It's possible that streams contains more data than the Content-Length.
+      #
+      # The request object should make sure to never emit more than
+      # Content-Length, if Content-Length is set.
+      #
+      # This is in particular useful when respoding to range requests with
+      # streams that represent files on the filesystem, as it's possible to just
+      # seek the stream to a certain point, set the content-length and let the
+      # request object do the rest.
+      def test_long_stream_to_string_body
+        body = StringIO.new
+        body.write('abcdefg')
+        body.seek(2)
+
+        message = MessageMock.new
+        message.body = body
+        message.update_header('Content-Length', '4')
+
+        assert_equal(
+          'cdef',
+          message.body_as_string
+        )
+      end
+
       def test_get_empty_body_stream
         message = MessageMock.new
         body = message.body_as_stream
