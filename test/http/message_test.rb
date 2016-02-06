@@ -178,10 +178,6 @@ module Tilia
 
     class MessageMock
       include Message
-
-      def initialize
-        initialize_message
-      end
     end
   end
 end

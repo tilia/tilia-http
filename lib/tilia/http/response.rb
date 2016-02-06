@@ -77,44 +77,28 @@ module Tilia
       # Creates the response object
       #
       # @param [String, Fixnum] status
-      # @param array headers
-      # @param resource body
+      # @param [Hash] headers
+      # @param [String, IO] body
       # @return [void]
       def initialize(status = nil, headers = nil, body = nil)
-        initialize_message # RUBY
+        super()
 
-        self.status = status if status
+        self.status = status if status # Don't set @status directly!
         update_headers(headers) if headers
-        self.body = body if body
+        @body = body if body
       end
 
-      # Returns the current HTTP status code.
-      #
-      # @return int
+      # (see ResponseInterface#status)
       attr_reader :status
 
-      # Returns the human-readable status string.
-      #
-      # In the case of a 200, this may for example be 'OK'.
-      #
-      # @return [String]
+      # (see ResponseInterface#status_text)
       attr_reader :status_text
 
-      # Sets the HTTP status code.
-      #
-      # This can be either the full HTTP status code with human readable string,
-      # for example: "403 I can't let you do that, Dave".
-      #
-      # Or just the code, in which case the appropriate default message will be
-      # added.
-      #
-      # @param [String, Fixnum] status
-      # @throws \InvalidArgumentExeption
-      # @return [void]
+      # (see ResponseInterface#status=)
       def status=(status)
         if status.is_a?(Fixnum) || status =~ /^\d+$/
           status_code = status
-          status_text = self.class.status_codes.key?(status.to_i) ? self.class.status_codes[status.to_i] : 'Unkown'
+          status_text = Response.status_codes.key?(status.to_i) ? Response.status_codes[status.to_i] : 'Unkown'
         else
           (
             status_code,
@@ -122,9 +106,11 @@ module Tilia
           ) = status.split(' ', 2)
         end
 
-        fail ArgumentError, 'The HTTP status code must be exactly 3 digits' if status_code.to_i < 100 || status_code.to_i > 999
+        status_code = status_code.to_i unless status_code.is_a?(Fixnum)
 
-        @status = status_code.to_i
+        fail ArgumentError, 'The HTTP status code must be exactly 3 digits' if status_code < 100 || status_code > 999
+
+        @status = status_code
         @status_text = status_text
       end
 

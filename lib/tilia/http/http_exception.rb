@@ -7,7 +7,7 @@ module Tilia
     #
     # If you'd like to use this, create a new exception class, extending Exception
     # and implementing this interface.
-    class HttpException < Exception
+    class HttpException < StandardError
       # The http status code for the error.
       #
       # This may either be just the number, or a number and a human-readable

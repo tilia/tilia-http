@@ -10,37 +10,22 @@ module Tilia
 
       # Constructor.
       #
-      # @param ResponseInterface inner
+      # @param [ResponseInterface] inner
       def initialize(inner)
         @inner = inner
       end
 
-      # Returns the current HTTP status code.
-      #
-      # @return int
+      # (see ResponseInterface#status)
       def status
         @inner.status
       end
 
-      # Returns the human-readable status string.
-      #
-      # In the case of a 200, this may for example be 'OK'.
-      #
-      # @return [String]
+      # (see ResponseInterface#status_text)
       def status_text
         @inner.status_text
       end
 
-      # Sets the HTTP status code.
-      #
-      # This can be either the full HTTP status code with human readable string,
-      # for example: "403 I can't let you do that, Dave".
-      #
-      # Or just the code, in which case the appropriate default message will be
-      # added.
-      #
-      # @param [String, Fixnum] status
-      # @return [void]
+      # (see ResponseInterface#status=)
       def status=(status)
         @inner.status = status
       end

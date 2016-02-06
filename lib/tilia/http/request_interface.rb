@@ -14,7 +14,7 @@ module Tilia
       #
       # @param [String] method
       # @return [void]
-      def method=(_method)
+      def method=(method)
       end
 
       # Returns the request url.
@@ -27,7 +27,7 @@ module Tilia
       #
       # @param [String] url
       # @return [void]
-      def url=(_url)
+      def url=(url)
       end
 
       # Returns the absolute url.
@@ -40,7 +40,7 @@ module Tilia
       #
       # @param [String] url
       # @return [void]
-      def absolute_url=(_url)
+      def absolute_url=(url)
       end
 
       # Returns the current base url.
@@ -57,7 +57,7 @@ module Tilia
       #
       # @param [String] url
       # @return [void]
-      def base_url=(_url)
+      def base_url=(url)
       end
 
       # Returns the relative path.
@@ -82,7 +82,7 @@ module Tilia
       #
       # This is equivalent to PHP's $_GET superglobal.
       #
-      # @return array
+      # @return [Hash]
       def query_parameters
       end
 
@@ -90,7 +90,7 @@ module Tilia
       #
       # This is equivalent to PHP's $_POST superglobal.
       #
-      # @return array
+      # @return [Hash]
       def post_data
       end
 
@@ -101,9 +101,9 @@ module Tilia
       # This would not have been needed, if POST data was accessible as
       # php://input, but unfortunately we need to special case it.
       #
-      # @param array post_data
+      # @param [Hash] post_data
       # @return [void]
-      def post_data=(_post_data)
+      def post_data=(post_data)
       end
 
       # Returns an item from the _SERVER array.
@@ -112,14 +112,14 @@ module Tilia
       #
       # @param [String] value_name
       # @return [String, nil]
-      def raw_server_value(_value_name)
+      def raw_server_value(value_name)
       end
 
       # Sets the _SERVER array.
       #
-      # @param array data
+      # @param [Hash] data
       # @return [void]
-      def raw_server_data=(_data)
+      def raw_server_data=(data)
       end
     end
   end

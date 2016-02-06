@@ -56,9 +56,9 @@ module Tilia
     #   http://tools.ietf.org/html/rfc7231#section-7.1.1.1
     #
     # @param [String] date_string
-    # @return bool|DateTime
+    # @return [Time, nil]
     def self.parse_date(date_string)
-      return false unless date_string
+      return nil if date_string.blank?
 
       # Only the format is checked, valid ranges are checked by strtotime below
       month = '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
@@ -83,7 +83,7 @@ module Tilia
       # allow for space around the string and strip it
       date_string.strip!
 
-      return false unless date_string =~ /^#{http_date}$/
+      return nil unless date_string =~ /^#{http_date}$/
 
       date = Time.zone.parse date_string
 
@@ -112,7 +112,7 @@ module Tilia
 
     # Transforms a DateTime object to a valid HTTP/1.1 Date header value
     #
-    # @param DateTime date_time
+    # @param [Time] date_time
     # @return [String]
     def self.to_date(date_time)
       # We need to clone it, as we don't want to affect the existing
@@ -136,10 +136,10 @@ module Tilia
     # implying that no accept header was sent.
     #
     # @param [String, nil] accept_header_value
-    # @param array available_options
+    # @param [Array<String>] available_options
     # @return [String, nil]
     def self.negotiate_content_type(accept_header_value, available_options)
-      unless accept_header_value
+      if accept_header_value.blank?
         # Grabbing the first in the list.
         return available_options[0]
       end
@@ -223,7 +223,7 @@ module Tilia
     # Parameters are currently discarded. There's no known prefer value that
     # uses them.
     #
-    # @param [String, Array<String>] header
+    # @param [String, Array<String>] input
     # @return array
     def self.parse_prefer(input)
       token = '[!#$%&\'*+\-.^_`~A-Za-z0-9]+'
@@ -287,7 +287,7 @@ $
     #
     # @param [String, Array<String>] values
     # @param [String, Array<String>] values2
-    # @return [String][]
+    # @return [Array<String>]
     def self.header_values(values, values2 = nil)
       values = [values] unless values.is_a?(Array)
       if values2
@@ -313,7 +313,7 @@ $
     # 4. parameters
     #
     # @param [String] str
-    # @return array
+    # @return [Hash, nil]
     def self.parse_mime_type(str)
       parameters = {}
       # If no q= parameter appears, then quality = 1.

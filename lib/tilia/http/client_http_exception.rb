@@ -7,14 +7,14 @@ module Tilia
     class ClientHttpException < Tilia::Http::HttpException
       # Constructor
       #
-      # @param ResponseInterface response
+      # @param [ResponseInterface] response
       def initialize(response)
         @response = response
       end
 
       # The http status code for the error.
       #
-      # @return int
+      # @return [Fixnum]
       def http_status
         @response.status
       end

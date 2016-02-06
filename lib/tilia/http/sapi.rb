@@ -26,7 +26,7 @@ module Tilia
       # This static method will create a new Request object, based on the
       # current PHP request.
       #
-      # @return Request
+      # @return [Request]
       def self.request
         fail NotImplementedError, 'This object method now is an instance method'
       end
@@ -35,7 +35,7 @@ module Tilia
       #
       # This calls php's header function and streams the body to php://output.
       #
-      # @param ResponseInterface response
+      # @param [ResponseInterface] response
       # @return [void]
       def self.send_response(response)
         # RUBY: Rack does not support HTTP Version (?)
@@ -62,8 +62,8 @@ module Tilia
       # This static method will create a new Request object, based on a PHP
       # $_SERVER array.
       #
-      # @param array server_array
-      # @return Request
+      # @param [Hash] server_array
+      # @return [Request]
       def self.create_from_server_array(server_array)
         headers = {}
         method = nil

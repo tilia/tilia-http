@@ -13,49 +13,36 @@ module Tilia
       #
       # @param [String] method
       # @param [String] url
-      # @param array headers
-      # @param resource body
+      # @param [Hash] headers
+      # @param [String, IO] body
       def initialize(method = nil, url = nil, headers = nil, body = nil)
-        initialize_message
+        super()
+
         @base_url = '/' # RUBY
         @post_data = {}
         @raw_server_data = {}
 
         fail ArgumentError, 'The first argument for this constructor should be a string or null, not an array. Did you upgrade from sabre/http 1.0 to 2.0?' if method.is_a?(Array)
 
-        self.method = method if method
-        self.url = url if url
+        @method = method if method
+        @url = url if url
         update_headers(headers) if headers
-        self.body = body if body
+        @body = body if body
       end
 
-      # Returns the current HTTP method
-      #
-      # @return [String]
+      # (see RequestInterface#method)
       attr_reader :method
 
-      # Sets the HTTP method
-      #
-      # @param [String] method
-      # @return [void]
+      # (see RequestInterface#method=)
       attr_writer :method
 
-      # Returns the request url.
-      #
-      # @return [String]
+      # (see RequestInterface#url)
       attr_reader :url
 
-      # Sets the request url.
-      #
-      # @param [String] url
-      # @return [void]
+      # (see RequestInterface#url=)
       attr_writer :url
 
-      # Returns the list of query parameters.
-      #
-      # This is equivalent to PHP's $_GET superglobal.
-      #
-      # @return array
+      # (see RequestInterface#query_parameters)
       def query_parameters
         url = self.url
 
@@ -71,45 +58,19 @@ module Tilia
         end
       end
 
-      # Sets the absolute url.
-      #
-      # @param [String] url
-      # @return [void]
+      # (see RequestInterface#absolute_url=)
       attr_writer :absolute_url
 
-      # Returns the absolute url.
-      #
-      # @return [String]
+      # (see RequestInterface#absolute_url)
       attr_reader :absolute_url
 
-      # Sets a base url.
-      #
-      # This url is used for relative path calculations.
-      #
-      # @param [String] url
-      # @return [void]
+      # (see RequestInterface#base_url=)
       attr_writer :base_url
 
-      # Returns the current base url.
-      #
-      # @return [String]
+      # (see RequestInterface#base_url)
       attr_reader :base_url
 
-      # Returns the relative path.
-      #
-      # This is being calculated using the base url. This path will not start
-      # with a slash, so it will always return something like
-      # 'example/path.html'.
-      #
-      # If the full path is equal to the base url, this method will return an
-      # empty string.
-      #
-      # This method will also urldecode the path, and if the url was incoded as
-      # ISO-8859-1, it will convert it to UTF-8.
-      #
-      # If the path is outside of the base url, a LogicException will be thrown.
-      #
-      # @return [String]
+      # (see RequestInterface#path)
       def path
         # Removing duplicated slashes.
         uri = (url || '').gsub('//', '/')
@@ -130,38 +91,18 @@ module Tilia
         fail "Requested uri (#{url}) is out of base uri (#{base_url})"
       end
 
-      # Sets the post data.
-      #
-      # This is equivalent to PHP's $_POST superglobal.
-      #
-      # This would not have been needed, if POST data was accessible as
-      # php://input, but unfortunately we need to special case it.
-      #
-      # @param array post_data
-      # @return [void]
+      # (see RequestInterface#post_data=)
       attr_writer :post_data
 
-      # Returns the POST data.
-      #
-      # This is equivalent to PHP's $_POST superglobal.
-      #
-      # @return array
+      # (see RequestInterface#post_data)
       attr_reader :post_data
 
-      # Returns an item from the _SERVER array.
-      #
-      # If the value does not exist in the array, null is returned.
-      #
-      # @param [String] value_name
-      # @return [String, nil]
+      # (see RequestInterface#raw_server_value)
       def raw_server_value(value_name)
         @raw_server_data[value_name]
       end
 
-      # Sets the _SERVER array.
-      #
-      # @param array data
-      # @return [void]
+      # (see RequestInterface#raw_server_data=)
       def raw_server_data=(data)
         @raw_server_data = data.dup
       end

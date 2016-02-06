@@ -8,7 +8,7 @@ module Tilia
       # Note that the stream may not be rewindable, and therefore may only be
       # read once.
       #
-      # @return resource
+      # @return [IO, StringIO]
       def body_as_stream
       end
 
@@ -25,30 +25,30 @@ module Tilia
       #
       # This could be either a string or a stream.
       #
-      # @return resource|string
+      # @return [String, IO, StringIO]
       def body
       end
 
       # Updates the body resource with a new stream.
       #
-      # @param resource body
+      # @param [String, #read] body
       # @return [void]
-      def body=(_body)
+      def body=(body)
       end
 
       # Returns all the HTTP headers as an array.
       #
       # Every header is returned as an array, with one or more values.
       #
-      # @return array
+      # @return [Hash]
       def headers
       end
 
       # Will return true or false, depending on if a HTTP header exists.
       #
       # @param [String] name
-      # @return bool
-      def header?(_name)
+      # @return [Boolean]
+      def header?(name)
       end
 
       # Returns a specific HTTP header, based on it's name.
@@ -65,7 +65,7 @@ module Tilia
       #
       # @param [String] name
       # @return [String, nil]
-      def header(_name)
+      def header(name)
       end
 
       # Returns a HTTP header as an array.
@@ -76,8 +76,8 @@ module Tilia
       # If the header did not exists, this method will return an empty array.
       #
       # @param [String] name
-      # @return [String][]
-      def header_as_array(_name)
+      # @return [Array<String>]
+      def header_as_array(name)
       end
 
       # Updates a HTTP header.
@@ -89,7 +89,7 @@ module Tilia
       # @param [String] name
       # @param [String, Array<String>] value
       # @return [void]
-      def update_header(_name, _value)
+      def update_header(name, value)
       end
 
       # Sets a new set of HTTP headers.
@@ -99,9 +99,9 @@ module Tilia
       #
       # Any header that already existed will be overwritten.
       #
-      # @param array headers
+      # @param [Hash] headers
       # @return [void]
-      def update_headers(_headers)
+      def update_headers(headers)
       end
 
       # Adds a HTTP header.
@@ -113,16 +113,16 @@ module Tilia
       # @param [String] name
       # @param [String] value
       # @return [void]
-      def add_header(_name, _value)
+      def add_header(name, value)
       end
 
       # Adds a new set of HTTP headers.
       #
       # Any existing headers will not be overwritten.
       #
-      # @param array headers
+      # @param [Hash] headers
       # @return [void]
-      def add_headers(_headers)
+      def add_headers(headers)
       end
 
       # Removes a HTTP header.
@@ -131,8 +131,9 @@ module Tilia
       # This method should return true if the header was successfully deleted,
       # and false if the header did not exist.
       #
+      # @param [String] name
       # @return bool
-      def remove_header(_name)
+      def remove_header(name)
       end
 
       # Sets the HTTP version.
@@ -141,7 +142,7 @@ module Tilia
       #
       # @param [String] version
       # @return [void]
-      def http_version=(_version)
+      def http_version=(version)
       end
 
       # Returns the HTTP version.

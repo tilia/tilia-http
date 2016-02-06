@@ -5,7 +5,7 @@ module Tilia
     # Note: this class is deprecated. All its functionality moved to functions.php
     # or sabre\uri.
     #
-    # @deprectated
+    # @deprecated
     module UrlUtil
       # Encodes the path of a url.
       #
@@ -51,7 +51,7 @@ module Tilia
       #
       # @deprecated Use Sabre\Uri\split.
       # @param [String] path
-      # @return array
+      # @return [Array]
       def self.split_path(path)
         Tilia::Uri.split(path)
       end

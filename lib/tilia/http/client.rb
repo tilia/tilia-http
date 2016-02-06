@@ -35,7 +35,7 @@ module Tilia
       #
       # @return [void]
       def initialize
-        initialize_event_emitter_trait
+        super
 
         @hydra = nil
         @throw_exceptions = false
@@ -50,7 +50,7 @@ module Tilia
 
       # Sends a request to a HTTP server, and returns a response.
       #
-      # @param RequestInterface request
+      # @param [RequestInterface] request
       # @return [ResponseInterface]
       def send_request(request)
         emit('beforeRequest', [request])
@@ -131,9 +131,9 @@ module Tilia
       # After calling sendAsync, you must therefore occasionally call the poll
       # method, or wait.
       #
-      # @param RequestInterface request
-      # @param callable success
-      # @param callable error
+      # @param [RequestInterface] request
+      # @param [#call] success
+      # @param [#call] error
       # @return [void]
       def send_async(request, success = nil, error = nil)
         emit('beforeRequest', [request])
@@ -148,7 +148,7 @@ module Tilia
       # This method will return true if there are still requests waiting to
       # return, and false if all the work is done.
       #
-      # @return bool
+      # @return [Boolean]
       def poll
         # nothing to do?
         return false if @client_map.empty?
@@ -231,16 +231,15 @@ module Tilia
       # This only works for the send method. Throwing exceptions for
       # send_async is not supported.
       #
-      # @param bool throw_exceptions
-      # @return [void]
+      # @return [Boolean]
       attr_writer :throw_exceptions
 
       # Adds a CURL setting.
       #
       # These settings will be included in every HTTP request.
       #
-      # @param int name
-      # @param mixed value
+      # @param [Symbol] name
+      # @param value
       # @return [void]
       def add_curl_setting(name, value)
         @curl_settings[name] = value
@@ -250,7 +249,7 @@ module Tilia
 
       # This method is responsible for performing a single request.
       #
-      # @param RequestInterface request
+      # @param [RequestInterface] request
       # @return [ResponseInterface]
       def do_request(request)
         client = create_client(request)
@@ -285,9 +284,8 @@ module Tilia
       #   * http_code - HTTP status code, as an int. Only set if Only set if
       #                 status is STATUS_SUCCESS, or STATUS_HTTPERROR
       #
-      # @param [String] response
-      # @param resource curl_handle
-      # @return Response
+      # @param [Typhoeus::Request] client
+      # @return [Response]
       def parse_curl_result(client)
         client_response = client.response
         unless client_response.return_code == :ok
@@ -341,10 +339,10 @@ module Tilia
       # We keep this in a separate method, so we can call it without triggering
       # the beforeRequest event and don't do the poll.
       #
-      # @param RequestInterface request
-      # @param callable success
-      # @param callable error
-      # @param int retry_count
+      # @param [RequestInterface] request
+      # @param [#call] success
+      # @param [#call] error
+      # @param [Fixnum] retry_count
       def send_async_internal(request, success, error, retry_count = 0)
         @hydra = Typhoeus::Hydra.hydra unless @hydra
 

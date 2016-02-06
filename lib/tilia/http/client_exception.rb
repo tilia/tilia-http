@@ -2,7 +2,7 @@ module Tilia
   module Http
     # This exception may be emitted by the HTTP\Client class, in case there was a
     # problem emitting the request.
-    class ClientException < Exception
+    class ClientException < StandardError
       # TODO: document
       def initialize(code)
         @code = code.to_i

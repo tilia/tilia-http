@@ -7,12 +7,7 @@ module Tilia
     module Message
       include Tilia::Http::MessageInterface
 
-      # Returns the body as a readable stream resource.
-      #
-      # Note that the stream may not be rewindable, and therefore may only be
-      # read once.
-      #
-      # @return resource
+      # (see MessageInterface#body_as_stream)
       def body_as_stream
         body = @body
         if body.is_a?(String) || body.nil?
@@ -24,12 +19,7 @@ module Tilia
         body
       end
 
-      # Returns the body as a string.
-      #
-      # Note that because the underlying data may be based on a stream, this
-      # method could only work correctly the first time.
-      #
-      # @return [String]
+      # (see MessageInterface#body_as_string)
       def body_as_string
         body = @body
         if body.is_a?(String)
@@ -47,23 +37,13 @@ module Tilia
         end
       end
 
-      # Returns the message body, as it's internal representation.
-      #
-      # This could be either a string or a stream.
-      #
-      # @return resource|string
+      # (see MessageInterface#body)
       attr_reader :body
 
-      # Replaces the body resource with a new stream or string.
-      #
-      # @param resource|string body
+      # (see MessageInterface#body=)
       attr_writer :body
 
-      # Returns all the HTTP headers as an array.
-      #
-      # Every header is returned as an array, with one or more values.
-      #
-      # @return array
+      # (see MessageInterface#headers)
       def headers
         result = {}
         @headers.values.each do |header_info|
@@ -72,28 +52,12 @@ module Tilia
         result
       end
 
-      # Will return true or false, depending on if a HTTP header exists.
-      #
-      # @param [String] name
-      # @return bool
+      # (see MessageInterface#header?)
       def header?(name)
         @headers.key? name.downcase
       end
 
-      # Returns a specific HTTP header, based on it's name.
-      #
-      # The name must be treated as case-insensitive.
-      # If the header does not exist, this method must return null.
-      #
-      # If a header appeared more than once in a HTTP request, this method will
-      # concatenate all the values with a comma.
-      #
-      # Note that this not make sense for all headers. Some, such as
-      # `Set-Cookie` cannot be logically combined with a comma. In those cases
-      # you *should* use header_as_array.
-      #
-      # @param [String] name
-      # @return [String, nil]
+      # (see MessageInterface#header)
       def header(name)
         name = name.downcase
 
@@ -102,15 +66,7 @@ module Tilia
         nil
       end
 
-      # Returns a HTTP header as an array.
-      #
-      # For every time the HTTP header appeared in the request or response, an
-      # item will appear in the array.
-      #
-      # If the header did not exists, this method will return an empty array.
-      #
-      # @param [String] name
-      # @return [String][]
+      # (see MessageInterface#header_as_array)
       def header_as_array(name)
         name = name.downcase
 
@@ -119,44 +75,20 @@ module Tilia
         []
       end
 
-      # Updates a HTTP header.
-      #
-      # The case-sensitity of the name value must be retained as-is.
-      #
-      # If the header already existed, it will be overwritten.
-      #
-      # @param [String] name
-      # @param [String, Array<String>] value
-      # @return [void]
+      # (see MessageInterface#update_header)
       def update_header(name, value)
         value = [value] unless value.is_a?(Array)
         @headers[name.downcase] = [name, value]
       end
 
-      # Sets a new set of HTTP headers.
-      #
-      # The headers array should contain headernames for keys, and their value
-      # should be specified as either a string or an array.
-      #
-      # Any header that already existed will be overwritten.
-      #
-      # @param array headers
-      # @return [void]
+      # (see MessageInterface#update_headers)
       def update_headers(headers)
         headers.each do |name, value|
           update_header(name, value)
         end
       end
 
-      # Adds a HTTP header.
-      #
-      # This method will not overwrite any existing HTTP header, but instead add
-      # another value. Individual values can be retrieved with
-      # getHeadersAsArray.
-      #
-      # @param [String] name
-      # @param [String] value
-      # @return [void]
+      # (see MessageInterface#add_header)
       def add_header(name, value)
         l_name = name.downcase
         value = [value] unless value.is_a?(Array)
@@ -168,25 +100,14 @@ module Tilia
         end
       end
 
-      # Adds a new set of HTTP headers.
-      #
-      # Any existing headers will not be overwritten.
-      #
-      # @param array headers
-      # @return [void]
+      # (see MessageInterface#add_headers)
       def add_headers(headers)
         headers.each do |name, value|
           add_header(name, value)
         end
       end
 
-      # Removes a HTTP header.
-      #
-      # The specified header name must be treated as case-insenstive.
-      # This method should return true if the header was successfully deleted,
-      # and false if the header did not exist.
-      #
-      # @return bool
+      # (see MessageInterface#remove_header)
       def remove_header(name)
         name = name.downcase
         return false unless @headers.key?(name)
@@ -194,27 +115,22 @@ module Tilia
         true
       end
 
-      # Sets the HTTP version.
-      #
-      # Should be 1.0 or 1.1.
-      #
-      # @param [String] version
-      # @return [void]
+      # (see MessageInterface#http_version)
       attr_writer :http_version
 
-      # Returns the HTTP version.
-      #
-      # @return [String]
+      # (see MessageInterface#http_version=)
       attr_reader :http_version
 
-      # TODO: document
-      def initialize_message
+      # Initializes the instance vars of Message
+      def initialize(*args)
         @body = nil
         @headers = {}
         @http_version = '1.1'
+
+        super
       end
 
-      # TODO: document
+      # creates a deep copy of the headers hash when cloning
       def initialize_copy(_original)
         @headers = @headers.deep_dup
       end

@@ -6,7 +6,7 @@ module Tilia
 
       # Returns the current HTTP status code.
       #
-      # @return int
+      # @return [Fixnum]
       def status
       end
 
@@ -27,9 +27,9 @@ module Tilia
       # added.
       #
       # @param [String, Fixnum] status
-      # @throws \InvalidArgumentExeption
+      # @raise [ArgumentError] if the status code deoes not have 3 digits
       # @return [void]
-      def status=(_status)
+      def status=(status)
       end
     end
   end

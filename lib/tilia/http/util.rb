@@ -8,7 +8,7 @@ module Tilia
       #
       # @deprecated Use Tilia::Http::negotiate_content_type
       # @param [String, nil] accept_header_value
-      # @param array available_options
+      # @param [Array<String>] available_options
       # @return [String, nil]
       def self.negotiate_content_type(accept_header_value, available_options)
         Http.negotiate_content_type(accept_header_value, available_options)
@@ -17,8 +17,8 @@ module Tilia
       # Deprecated! Use negotiateContentType.
       #
       # @deprecated Use Tilia::Http::negotiate_content_type
-      # @param [String, nil] accept_header
-      # @param array available_options
+      # @param [String, nil] accept_header_value
+      # @param [Array<String>] available_options
       # @return [String, nil]
       def self.negotiate(accept_header_value, available_options)
         Http.negotiate_content_type(accept_header_value, available_options)
@@ -30,7 +30,7 @@ module Tilia
       #
       # @deprecated Use Tilia::Http::parse_date
       # @param [String] date_header
-      # @return bool|DateTime
+      # @return [Time, nil]
       def self.parse_http_date(date_header)
         Http.parse_date(date_header)
       end
@@ -41,7 +41,7 @@ module Tilia
       # specified as GMT.
       #
       # @deprecated Use Tilia::Http::to_date
-      # @param \DateTime date_time
+      # @param [Time] date_time
       # @return [String]
       def self.to_http_date(date_time)
         Http.to_date(date_time)

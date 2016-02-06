@@ -39,7 +39,7 @@ module Tilia
         # @return [void]
         def init
           digest = self.digest || ''
-          @digest_parts = parse_digest(digest)
+          @digest_parts = parse_digest(digest) || {}
         end
 
         # Sets the quality of protection value.
@@ -54,8 +54,7 @@ module Tilia
         # supported by most HTTP clients. QOP_AUTHINT also requires the entire
         # request body to be md5'ed, which can put strains on CPU and memory.
         #
-        # @param int qop
-        # @return [void]
+        # @return [Fixnum]
         attr_writer :qop
 
         # Validates the user.
@@ -63,7 +62,7 @@ module Tilia
         # The A1 parameter should be md5(username . ':' . realm . ':' . password)
         #
         # @param [String] a1
-        # @return bool
+        # @return [Boolean]
         def validate_a1(a1)
           @a1 = a1
           validate
@@ -73,7 +72,7 @@ module Tilia
         # It is strongly recommended not store the password in plain-text and use validateA1 instead.
         #
         # @param [String] password
-        # @return bool
+        # @return [Boolean]
         def validate_password(password)
           return false unless @digest_parts.any? # RUBY
 
@@ -92,7 +91,7 @@ module Tilia
 
         # Validates the digest challenge
         #
-        # @return bool
+        # @return [Boolean]
         def validate
           return false unless @digest_parts.any? # RUBY
 
@@ -146,7 +145,7 @@ module Tilia
         #
         # If the header could not be found, null will be returned
         #
-        # @return mixed
+        # @return [String, nil]
         def digest
           @request.header('Authorization')
         end
@@ -155,10 +154,10 @@ module Tilia
 
         # Parses the different pieces of the digest string into an array.
         #
-        # This method returns false if an incomplete digest was supplied
+        # This method returns nil if an incomplete digest was supplied
         #
         # @param [String] digest
-        # @return mixed
+        # @return [Hash, nil]
         def parse_digest(digest)
           # protect against missing data
           needed_parts = { 'nonce' => 1, 'nc' => 1, 'cnonce' => 1, 'qop' => 1, 'username' => 1, 'uri' => 1, 'response' => 1 }
@@ -169,7 +168,7 @@ module Tilia
             needed_parts.delete m1
           end
 
-          needed_parts.any? ? {} : data
+          needed_parts.any? ? nil : data
         end
       end
     end
