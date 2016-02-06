@@ -4,13 +4,9 @@ require 'json'
 # serialize themselves as strings.
 #
 # This is mainly useful for debugging purposes.
-#
-# @copyright Copyright (C) 2009-2015 fruux GmbH (https://fruux.com/).
-# @author Evert Pot (http://evertpot.com/)
-# @license http://sabre.io/license/ Modified BSD License
 
 # Expected to be called "bundle exec examples/stringify.rb"
-require './lib/tilia_http'
+require 'tilia/http'
 
 request = Tilia::Http::Request.new('POST', '/foo')
 request.update_headers(

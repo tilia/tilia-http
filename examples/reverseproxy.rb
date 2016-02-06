@@ -11,7 +11,7 @@ my_base_url = ''
 # my_base_url = '/~evert/sabre/http/examples/reverseproxy.php/'
 
 # Expected to be called "bundle exec examples/reverseproxy.rb"
-require './lib/tilia_http'
+require 'tilia/http'
 require 'rack'
 
 app = proc do |env|

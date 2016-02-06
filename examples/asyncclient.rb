@@ -3,13 +3,9 @@
 #
 # By default up to 10 requests will be executed in paralel. HTTP connections
 # are re-used and DNS is cached, all thanks to the power of curl.
-#
-# @copyright Copyright (C) 2009-2015 fruux GmbH (https://fruux.com/).
-# @author Evert Pot (http://evertpot.com/)
-# @license http://sabre.io/license/ Modified BSD License
 
 # Expected to be called "bundle exec examples/asyncclient.rb"
-require './lib/tilia/http'
+require 'tilia/http'
 
 # This is the request we're repeating a 1000 times.
 request = Tilia::Http::Request.new('GET', 'http://localhost/')

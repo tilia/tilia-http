@@ -1,13 +1,9 @@
 #!/usr/bin/env ruby
 # This example does not work because of rack ...
 # This example shows how to do Basic authentication.
-# *
-# @copyright Copyright (C) 2009-2015 fruux GmbH (https://fruux.com/).
-# @author Evert Pot (http://evertpot.com/)
-# @license http://sabre.io/license/ Modified BSD License
 
 # Expected to be called "bundle exec examples/basicauth.rb"
-require './lib/tilia_http'
+require 'tilia/http'
 require 'rack'
 
 app = proc do |env|
