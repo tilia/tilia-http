@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rchardet', '~>1.6'
   s.add_runtime_dependency 'tilia-event', '~> 2.0'
   s.add_runtime_dependency 'tilia-uri', '~> 1.0'
-  s.add_runtime_dependency 'rack', '~> 1.6'
+  s.add_runtime_dependency 'rack', '>= 1.6'
 end
