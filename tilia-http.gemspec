@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/tilia/tilia-http'
   s.add_runtime_dependency 'activesupport', '>= 4.0'
-  s.add_runtime_dependency 'typhoeus', '~> 0.8'
+  s.add_runtime_dependency 'typhoeus', '~> 1.4'
   s.add_runtime_dependency 'rchardet', '~>1.6'
   s.add_runtime_dependency 'tilia-event', '~> 2.0'
   s.add_runtime_dependency 'tilia-uri', '~> 1.0'
