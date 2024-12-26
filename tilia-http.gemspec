@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.email       = 'tilia@jakobsack.de'
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/tilia/tilia-http'
+  s.required_ruby_version = '>= 2.7.0'
   s.add_runtime_dependency 'activesupport', '>= 4.0'
   s.add_runtime_dependency 'typhoeus', '~> 1.4'
   s.add_runtime_dependency 'rchardet', '~>1.6'
