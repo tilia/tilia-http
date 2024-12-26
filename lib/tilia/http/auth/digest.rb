@@ -54,7 +54,7 @@ module Tilia
         # supported by most HTTP clients. QOP_AUTHINT also requires the entire
         # request body to be md5'ed, which can put strains on CPU and memory.
         #
-        # @return [Fixnum]
+        # @return [Integer]
         attr_writer :qop
 
         # Validates the user.

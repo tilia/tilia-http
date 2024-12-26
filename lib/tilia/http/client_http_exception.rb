@@ -14,7 +14,7 @@ module Tilia
 
       # The http status code for the error.
       #
-      # @return [Fixnum]
+      # @return [Integer]
       def http_status
         @response.status
       end

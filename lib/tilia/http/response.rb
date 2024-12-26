@@ -76,7 +76,7 @@ module Tilia
 
       # Creates the response object
       #
-      # @param [String, Fixnum] status
+      # @param [String, Integer] status
       # @param [Hash] headers
       # @param [String, IO] body
       # @return [void]
@@ -96,7 +96,7 @@ module Tilia
 
       # (see ResponseInterface#status=)
       def status=(status)
-        if status.is_a?(Fixnum) || status =~ /^\d+$/
+        if status.is_a?(Integer) || status =~ /^\d+$/
           status_code = status
           status_text = Response.status_codes.key?(status.to_i) ? Response.status_codes[status.to_i] : 'Unkown'
         else
@@ -106,7 +106,7 @@ module Tilia
           ) = status.split(' ', 2)
         end
 
-        status_code = status_code.to_i unless status_code.is_a?(Fixnum)
+        status_code = status_code.to_i unless status_code.is_a?(Integer)
 
         fail ArgumentError, 'The HTTP status code must be exactly 3 digits' if status_code < 100 || status_code > 999
 

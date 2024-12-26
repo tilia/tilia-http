@@ -342,7 +342,7 @@ module Tilia
       # @param [RequestInterface] request
       # @param [#call] success
       # @param [#call] error
-      # @param [Fixnum] retry_count
+      # @param [Integer] retry_count
       def send_async_internal(request, success, error, retry_count = 0)
         @hydra = Typhoeus::Hydra.hydra unless @hydra
 

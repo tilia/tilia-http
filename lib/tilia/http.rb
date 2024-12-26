@@ -402,7 +402,7 @@ $
     # @param [String] path
     # @return [String]
     def self.decode_path_segment(path)
-      path = URI.unescape(path)
+      path = URI::DEFAULT_PARSER.unescape(path)
       cd = CharDet.detect(path)
 
       # Best solution I could find ...
