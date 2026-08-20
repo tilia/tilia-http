@@ -9,11 +9,12 @@ Gem::Specification.new do |s|
   s.email       = 'tilia@jakobsack.de'
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/tilia/tilia-http'
-  s.required_ruby_version = '>= 2.7.0'
-  s.add_runtime_dependency 'activesupport', '>= 4.0'
-  s.add_runtime_dependency 'typhoeus', '~> 1.4'
-  s.add_runtime_dependency 'rchardet', '~>1.6'
-  s.add_runtime_dependency 'tilia-event', '~> 2.0'
-  s.add_runtime_dependency 'tilia-uri', '~> 1.0'
-  s.add_runtime_dependency 'rack', '>= 1.6'
+  s.required_ruby_version = '>= 3.1.0'
+
+  s.add_dependency 'activesupport', '>= 6.0'
+  s.add_dependency 'rack', '>= 2.0'
+  s.add_dependency 'rchardet', '>= 1.8'
+  s.add_dependency 'tilia-event', '~> 2.0', '>= 2.0.2.2'
+  s.add_dependency 'tilia-uri', '~> 1.0', '>= 1.0.1.3'
+  s.add_dependency 'typhoeus', '~> 1.4'
 end

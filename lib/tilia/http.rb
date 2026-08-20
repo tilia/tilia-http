@@ -81,7 +81,7 @@ module Tilia
       http_date = "(#{rfc1123_date}|#{rfc850_date}|#{asctime_date})"
 
       # allow for space around the string and strip it
-      date_string.strip!
+      date_string = date_string.strip
 
       return nil unless date_string =~ /^#{http_date}$/
 
@@ -402,7 +402,7 @@ $
     # @param [String] path
     # @return [String]
     def self.decode_path_segment(path)
-      path = URI::DEFAULT_PARSER.unescape(path)
+      path = Tilia::Uri::PARSER.unescape(path)
       cd = CharDet.detect(path)
 
       # Best solution I could find ...

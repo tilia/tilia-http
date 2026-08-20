@@ -42,6 +42,22 @@ module Tilia
       # (see RequestInterface#url=)
       attr_writer :url
 
+      # Parses a query string into a hash of arrays.
+      #
+      # This is what CGI.parse used to do; that method was removed in ruby 4.0.
+      #
+      # @param [String] query_string
+      # @return [Hash]
+      def self.parse_query_string(query_string)
+        query_string.split(/[&;]/).each_with_object({}) do |pair, params|
+          next if pair.empty?
+
+          (key, value) = pair.split('=', 2)
+          params[CGI.unescape(key)] ||= []
+          params[CGI.unescape(key)] << CGI.unescape(value) unless value.nil?
+        end
+      end
+
       # (see RequestInterface#query_parameters)
       def query_parameters
         url = self.url
@@ -49,7 +65,7 @@ module Tilia
         if !(index = url.index('?'))
           {}
         else
-          query_params = CGI.parse(url[index + 1..-1])
+          query_params = self.class.parse_query_string(url[index + 1..-1])
           query_params.keys.each do |key|
             query_params[key] = query_params[key][0] if query_params[key].size == 1
             query_params[key] = nil if query_params[key].size == 0
